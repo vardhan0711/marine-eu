@@ -34,7 +34,7 @@ function MainApp() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gradient-primary mb-1 tracking-tight">
-                FuelEU Maritime
+                Marine-EU
               </h1>
               <p className="text-slate-600 font-medium text-sm">Compliance Management System</p>
             </div>
@@ -55,7 +55,7 @@ function MainApp() {
       <footer className="mt-16 py-6 border-t border-slate-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm text-slate-500 font-medium">
-            © 2024 FuelEU Maritime Compliance System
+            © 2024 Marine-EU Compliance System
           </p>
         </div>
       </footer>

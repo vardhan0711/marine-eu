@@ -1,4 +1,4 @@
-# FuelEU Maritime — AI Build Plan
+# Marine-EU — AI Build Plan
 
 ## Requirements
 - Hexagonal architecture

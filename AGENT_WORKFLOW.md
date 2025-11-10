@@ -2,7 +2,7 @@
 # 🤖 AI Agent Workflow Log
 
 This project was built using Cursor AI, GPT-5, and GitHub Copilot in a structured agent-assisted workflow.
-The goal was to leverage AI for productivity while maintaining correctness for the FuelEU Maritime regulation requirements.
+The goal was to leverage AI for productivity while maintaining correctness for the FuelEU Maritime regulation requirements in the Marine-EU application.
 
 
 ## 🧠Agents Used

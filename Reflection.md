@@ -3,7 +3,7 @@
 
 **🧠 What I Learned**
 
-**Building this FuelEU Compliance Dashboard helped me deeply understand:**
+**Building this Marine-EU Compliance Dashboard helped me deeply understand:**
 
 **✅ Hexagonal Architecture (Ports & Adapters)**
 

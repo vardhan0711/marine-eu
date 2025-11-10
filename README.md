@@ -1,1 +1,440 @@
-"# marine-eu" 
+<div align="center">
+
+# ⚓ Marine-EU
+
+### Intelligent Maritime Compliance & Emissions Management System
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
+**Streamline your fleet's compliance with EU FuelEU Maritime Regulation (2023/1805)**
+
+[Features](#-key-features) • [Quick Start](#-quick-start) • [Architecture](#-architecture) • [Documentation](#-documentation)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [About](#-about)
+- [Key Features](#-key-features)
+- [Technology Stack](#-technology-stack)
+- [Architecture](#-architecture)
+- [Quick Start](#-quick-start)
+- [Configuration](#-configuration)
+- [Testing](#-testing)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+
+---
+
+## 🎯 About
+
+**Marine-EU** is a comprehensive digital platform engineered to assist maritime operators in navigating the complexities of the FuelEU Maritime Regulation. The system provides real-time compliance monitoring, emissions analytics, and credit management capabilities through an intuitive web interface.
+
+### What Makes It Special?
+
+✨ **Regulation-Compliant Calculations** — Implements official Annex IV formulas  
+📊 **Interactive Dashboards** — Real-time visualization of fleet performance  
+🔄 **Credit Management** — Banking and pooling mechanisms for compliance flexibility  
+🏗️ **Clean Architecture** — Hexagonal design for maintainability and scalability  
+🧪 **Fully Tested** — Comprehensive test coverage for critical calculations
+
+---
+
+## ✨ Key Features
+
+### 🗺️ Route Management
+Create, track, and analyze maritime routes with detailed emission metrics. Compare vessel performance against baseline standards and identify optimization opportunities.
+
+**Capabilities:**
+- Multi-route configuration and management
+- Distance and fuel consumption tracking
+- Route type classification (Intra-EU, Extra-EU, Mixed)
+- Real-time emission intensity calculations
+
+### 📈 Compliance Analytics
+Powerful comparison engine that evaluates GHG performance across your fleet, providing actionable insights for compliance planning.
+
+**Features:**
+- Side-by-side route comparisons
+- Compliance status indicators
+- Percentage variance analysis
+- Target vs. actual performance metrics
+
+### 💰 Credit Banking System
+Leverage Article 20 provisions to bank surplus compliance credits for future use, maximizing operational flexibility.
+
+**Functionality:**
+- Surplus credit storage with expiry management
+- Deficit coverage through banked credits
+- Capacity validation and limits
+- Automatic expiry tracking
+
+### 🤝 Pooling Mechanism
+Implement Article 21 pooling strategies to optimize compliance across vessel fleets using intelligent redistribution algorithms.
+
+**Highlights:**
+- Multi-vessel pool creation
+- Automatic surplus distribution
+- Greedy algorithm for optimal allocation
+- Real-time pool status monitoring
+
+### 📊 Visual Dashboard
+Modern, responsive interface built with cutting-edge web technologies for seamless user experience.
+
+**Components:**
+- Interactive charts and graphs (Recharts)
+- Real-time data updates
+- Tabbed navigation (Routes, Compare, Banking, Pooling)
+- Form validation and error handling
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+| Technology | Purpose |
+|:----------:|:--------|
+| **React 18** | UI framework with hooks and context |
+| **Vite** | Lightning-fast build tool and dev server |
+| **TypeScript** | Type-safe development |
+| **TailwindCSS** | Utility-first styling framework |
+| **React Query** | Server state management |
+| **Recharts** | Data visualization library |
+
+### Backend
+| Technology | Purpose |
+|:----------:|:--------|
+| **Node.js** | Runtime environment |
+| **Express** | Web application framework |
+| **TypeScript** | Type-safe backend development |
+| **Prisma** | Next-generation ORM |
+| **PostgreSQL** | Relational database |
+| **Zod** | Schema validation |
+
+### Development Tools
+- **Docker** — Containerized database
+- **Vitest** — Unit and integration testing
+- **pnpm** — Fast, disk space efficient package manager
+
+---
+
+## 🏛️ Architecture
+
+This project follows the **Hexagonal Architecture** (Ports & Adapters) pattern, ensuring clean separation of concerns and framework independence.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Presentation Layer                     │
+│  (React Components, UI State, User Interactions)        │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│                  Application Layer                       │
+│  (Use Cases, Business Logic, Domain Services)            │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│                    Domain Layer                          │
+│  (Entities, Value Objects, Domain Rules)                 │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│                  Infrastructure Layer                    │
+│  (Database, HTTP, External Services)                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Directory Structure
+
+```
+marine-eu/
+├── frontend/
+│   ├── src/
+│   │   ├── core/           # Domain models & ports
+│   │   ├── application/     # Business logic & hooks
+│   │   ├── adapters/        # API clients & external services
+│   │   └── ui/              # React components & pages
+│   └── public/
+│
+├── backend/
+│   ├── src/
+│   │   ├── core/            # Domain entities
+│   │   ├── application/     # Use cases
+│   │   ├── adapters/        # HTTP & database adapters
+│   │   └── infrastructure/  # Server setup
+│   └── prisma/              # Database schema & migrations
+│
+└── docker-compose.yml       # Database container config
+```
+
+### Design Principles
+
+- 🔒 **Framework Independence** — Core logic isolated from React/Express
+- 🧪 **Testability** — Easy to unit test business rules
+- 📦 **Modularity** — Clear boundaries between layers
+- 🔄 **Maintainability** — Easy to modify and extend
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- **Node.js** ≥ 18.0.0
+- **Docker Desktop** (for PostgreSQL)
+- **pnpm** (recommended) or npm/yarn
+
+### Installation
+
+#### 1️⃣ Clone the Repository
+
+```bash
+git clone <your-repo-url>
+cd marine-eu
+```
+
+#### 2️⃣ Start Database
+
+```bash
+docker compose up -d
+```
+
+This starts a PostgreSQL container on port `5432`.
+
+#### 3️⃣ Setup Backend
+
+```bash
+cd backend
+pnpm install
+pnpm exec prisma migrate dev
+pnpm dev
+```
+
+The backend API will be available at `http://localhost:3001`
+
+#### 4️⃣ Setup Frontend
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+The frontend application will be available at `http://localhost:3000`
+
+### 🎉 You're All Set!
+
+Open your browser and navigate to `http://localhost:3000` to start using Marine-EU.
+
+---
+
+## ⚙️ Configuration
+
+### Backend Environment Variables
+
+Create a `.env` file in the `backend/` directory:
+
+```env
+# Database Connection
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/marine_eu"
+
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+```
+
+### Frontend Environment Variables
+
+Create a `.env` file in the `frontend/` directory:
+
+```env
+# API Endpoint
+VITE_API_URL=http://localhost:3001
+```
+
+### Database Configuration
+
+The default PostgreSQL configuration (via Docker Compose):
+
+- **Host:** `localhost`
+- **Port:** `5432`
+- **Database:** `marine_eu`
+- **Username:** `postgres`
+- **Password:** `postgres`
+
+> ⚠️ **Security Note:** Change default credentials in production environments!
+
+---
+
+## 🧪 Testing
+
+The project includes comprehensive test suites for critical business logic:
+
+### Running Tests
+
+```bash
+# Backend tests
+cd backend
+pnpm test
+
+# Frontend tests
+cd frontend
+pnpm test
+```
+
+### Test Coverage
+
+- ✅ Compliance Balance calculations
+- ✅ Route comparison algorithms
+- ✅ Credit banking logic
+- ✅ Pooling redistribution
+- ✅ API endpoint validation
+- ✅ Database operations
+
+---
+
+## 📐 Compliance Calculations
+
+The system implements the official formulas from FuelEU Maritime Regulation Annex IV:
+
+### Energy Calculation
+```
+Energy (MJ) = Fuel Consumption (tons) × 41,000 MJ/ton
+```
+
+### Compliance Balance
+```
+CB (tCO₂eq) = (Target GHG Intensity - Actual GHG Intensity) × Energy (MJ) / 1,000,000
+```
+
+### Target Values
+- **2025:** 89.3368 gCO₂e/MJ
+- **2030:** 80.00 gCO₂e/MJ (future implementation)
+- **2035:** 70.00 gCO₂e/MJ (future implementation)
+
+### Status Indicators
+
+| CB Value | Status | Action |
+|:--------:|:------:|:------:|
+| > 0 | ✅ Surplus | Can be banked or pooled |
+| < 0 | ❌ Deficit | Requires banking/pooling |
+| = 0 | ⚖️ Compliant | No action needed |
+
+---
+
+## 📦 Sample Data
+
+The database is automatically seeded with a mock fleet dataset:
+
+- **5 Vessel Routes** across different ship types
+- **1 Baseline Route** for comparison
+- **4 Comparison Routes** with varying performance
+- **Realistic Emission Data** based on industry standards
+
+Routes include:
+- Container vessels
+- Bulk carriers
+- RoRo (Roll-on/Roll-off) ships
+- Tanker vessels
+
+---
+
+## 🗺️ Roadmap
+
+### Phase 1: Core Features ✅
+- [x] Route management
+- [x] Compliance calculations
+- [x] Credit banking
+- [x] Pooling mechanism
+- [x] Dashboard interface
+
+### Phase 2: Integration (In Progress)
+- [ ] EU MRV system integration
+- [ ] ETS (Emissions Trading System) connectivity
+- [ ] External data import/export
+- [ ] API authentication
+
+### Phase 3: Advanced Analytics
+- [ ] Predictive compliance modeling
+- [ ] Fleet-wide trend analysis
+- [ ] CO₂ forecasting
+- [ ] Optimization recommendations
+
+### Phase 4: Enterprise Features
+- [ ] Multi-tenant support
+- [ ] Role-based access control
+- [ ] Audit logging
+- [ ] Reporting engine
+- [ ] Digital twin simulation
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these guidelines:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Development Guidelines
+
+- Follow TypeScript best practices
+- Write tests for new features
+- Update documentation
+- Maintain code style consistency
+- Follow the hexagonal architecture pattern
+
+---
+
+## 📚 Documentation
+
+- **[Architecture Guide](ARCHITECTURE.md)** — Detailed architecture documentation
+- **[Agent Workflow](AGENT_WORKFLOW.md)** — AI-assisted development process
+- **[Reflection](Reflection.md)** — Project learnings and insights
+
+---
+
+## 🙏 Acknowledgments
+
+This project is built in compliance with:
+
+- **FuelEU Maritime Regulation (EU) 2023/1805**
+- **Annex IV** — Compliance balance calculation methods
+- **Article 20** — Banking of compliance credits
+- **Article 21** — Pooling of compliance credits
+
+### Open Source Libraries
+
+Special thanks to the maintainers of:
+
+- [Prisma](https://www.prisma.io/) — Database toolkit
+- [Express](https://expressjs.com/) — Web framework
+- [React](https://react.dev/) — UI library
+- [TailwindCSS](https://tailwindcss.com/) — CSS framework
+- [Recharts](https://recharts.org/) — Chart library
+
+### AI Development Partners
+
+Built with assistance from:
+
+- **Cursor AI** — Code generation and refactoring
+- **GitHub Copilot** — Inline code suggestions
+- **OpenAI GPT** — Architecture and formula design
+
+---
+
+<div align="center">
+
+**Made with ❤️ for sustainable maritime operations**
+
+</div>
