@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model routes {
+  id                         String      @id @default(uuid())
+  vesselId                   String
+  name                       String
+  totalDistanceNauticalMiles Float
+  startDate                  DateTime
+  endDate                    DateTime?
+  status                     RouteStatus
+  segments                   Json
+  createdAt                  DateTime    @default(now())
+  updatedAt                  DateTime    @updatedAt
+
+  @@index([startDate])
+  @@index([status])
+  @@index([vesselId])
+  @@map("routes")
+}
+
+model ShipCompliance {
+  id                     String           @id @default(uuid())
+  vesselId               String
+  reportingPeriod        String
+  totalEnergyConsumed    Float
+  totalCO2Emissions      Float
+  averageCarbonIntensity Float
+  targetCarbonIntensity  Float
+  complianceStatus       ComplianceStatus
+  poolId                 String?
+  submittedAt            DateTime?
+  verifiedAt             DateTime?
+  compliancePeriods      Json
+  fuelConsumptions       Json
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  pools                  Pool?            @relation(fields: [poolId], references: [id])
+
+  @@unique([vesselId, reportingPeriod])
+  @@index([reportingPeriod])
+  @@index([complianceStatus])
+  @@index([poolId])
+  @@index([vesselId])
+  @@map("ship_compliance")
+}
+
+model BankEntry {
+  id              String   @id @default(uuid())
+  vesselId        String
+  reportingPeriod String
+  bankedAmount    Float
+  appliedAmount   Float    @default(0)
+  remainingAmount Float
+  appliedToPeriod String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([appliedToPeriod])
+  @@index([reportingPeriod])
+  @@index([vesselId])
+  @@map("bank_entries")
+}
+
+model Pool {
+  id                String           @id @default(uuid())
+  name              String
+  description       String?
+  status            PoolStatus       @default(ACTIVE)
+  complianceRecords Json
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  members           PoolMember[]
+  ship_compliance   ShipCompliance[]
+
+  @@index([status])
+  @@map("pools")
+}
+
+model PoolMember {
+  id                     String   @id @default(uuid())
+  poolId                 String
+  companyId              String
+  vesselIds              String[]
+  joinedAt               DateTime @default(now())
+  contributionPercentage Float
+  pool                   Pool     @relation(fields: [poolId], references: [id], onDelete: Cascade)
+
+  @@unique([poolId, companyId])
+  @@index([poolId])
+  @@index([companyId])
+  @@map("pool_members")
+}
+
+enum RouteType {
+  INTRA_EU
+  EXTRA_EU
+  MIXED
+}
+
+enum FuelType {
+  MGO
+  MDO
+  HFO
+  LNG
+  METHANOL
+  AMMONIA
+  HYDROGEN
+  BATTERY
+  WIND
+  OTHER
+}
+
+enum ComplianceStatus {
+  COMPLIANT
+  NON_COMPLIANT
+  PENDING
+  UNDER_REVIEW
+}
+
+enum PoolType {
+  VOLUNTARY
+  MANDATORY
+  COMPANY
+  FLEET
+}
+
+enum PoolStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum RouteStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
