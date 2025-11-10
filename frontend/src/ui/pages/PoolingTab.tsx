@@ -158,18 +158,24 @@ export function PoolingTab() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Pooling</h2>
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-4xl font-bold text-gradient-primary mb-2">Pooling</h2>
+          <p className="text-slate-600 text-sm font-medium">Create and manage compliance unit pools</p>
+        </div>
         <Button onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : 'Create Pool'}
+          {showForm ? 'Cancel' : '+ Create Pool'}
         </Button>
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 space-y-4">
-          <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Create New Pool</h3>
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="card-elevated p-8 space-y-6 animate-slide-down">
+          <div>
+            <h3 className="text-2xl font-bold text-gradient-accent mb-2">Create New Pool</h3>
+            <p className="text-slate-600 text-sm">Set up a new compliance unit pool for sharing</p>
+          </div>
+          <div className="grid grid-cols-2 gap-6">
             <Input
               label="Pool Name"
               value={formData.name}
@@ -223,14 +229,20 @@ export function PoolingTab() {
               required
             />
           </div>
-          <Button type="submit" disabled={createPool.isPending}>
-            {createPool.isPending ? 'Creating...' : 'Create Pool'}
-          </Button>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" disabled={createPool.isPending}>
+              {createPool.isPending ? 'Creating...' : 'Create Pool'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => setShowForm(false)}>
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 
-      <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-        <div className="mb-4">
+      <div className="card-elevated p-8">
+        <div className="mb-6">
+          <h3 className="text-xl font-bold text-slate-800 mb-4">Pools</h3>
           <Select
             label="Filter by Status"
             value={filterStatus}
@@ -246,7 +258,11 @@ export function PoolingTab() {
           />
         </div>
 
-        {isLoading && <div className="text-center py-8">Loading...</div>}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-pulse text-slate-500 font-medium">Loading pools...</div>
+          </div>
+        )}
         {!isLoading && (
           <Table 
             columns={poolColumns} 
@@ -258,22 +274,26 @@ export function PoolingTab() {
       </div>
 
       {selectedPool && (
-        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Pool Members</h3>
-            <div className="flex gap-2">
+        <div className="card-elevated p-8 animate-slide-down">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h3 className="text-2xl font-bold text-gradient-accent mb-2">Pool Members</h3>
+              <p className="text-slate-600 text-sm">Manage members and allocations for this pool</p>
+            </div>
+            <div className="flex gap-3">
               <Button variant="secondary" onClick={() => setSelectedPool(null)}>
                 Close
               </Button>
               <Button onClick={() => setShowMemberForm(!showMemberForm)}>
-                {showMemberForm ? 'Cancel' : 'Add Member'}
+                {showMemberForm ? 'Cancel' : '+ Add Member'}
               </Button>
             </div>
           </div>
 
           {showMemberForm && (
-            <form onSubmit={handleAddMember} className="mb-4 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg hover:from-gray-100 hover:to-blue-100 transition-all duration-300 space-y-4 border border-gray-200">
-              <div className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleAddMember} className="mb-6 p-6 bg-gradient-to-r from-primary-50/50 to-accent-50/30 rounded-xl space-y-4 border border-primary-200/50 animate-slide-down">
+              <h4 className="text-lg font-semibold text-slate-800 mb-2">Add New Member</h4>
+              <div className="grid grid-cols-2 gap-6">
                 <Input
                   label="Ship ID"
                   value={memberFormData.shipId}
@@ -289,9 +309,14 @@ export function PoolingTab() {
                   required
                 />
               </div>
-              <Button type="submit" disabled={addMember.isPending}>
-                {addMember.isPending ? 'Adding...' : 'Add Member'}
-              </Button>
+              <div className="flex gap-3 pt-2">
+                <Button type="submit" disabled={addMember.isPending}>
+                  {addMember.isPending ? 'Adding...' : 'Add Member'}
+                </Button>
+                <Button type="button" variant="secondary" onClick={() => setShowMemberForm(false)}>
+                  Cancel
+                </Button>
+              </div>
             </form>
           )}
 

@@ -120,12 +120,15 @@ export function BankingTab() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Banking</h2>
-        <div className="flex gap-2">
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-4xl font-bold text-gradient-primary mb-2">Banking</h2>
+          <p className="text-slate-600 text-sm font-medium">Manage compliance unit banking and surplus allocation</p>
+        </div>
+        <div className="flex gap-3">
           <Button onClick={() => setShowBankForm(!showBankForm)}>
-            {showBankForm ? 'Cancel' : 'Bank Surplus'}
+            {showBankForm ? 'Cancel' : '+ Bank Surplus'}
           </Button>
           <Button variant="secondary" onClick={() => setShowApplyForm(!showApplyForm)}>
             {showApplyForm ? 'Cancel' : 'Apply Banked'}
@@ -134,9 +137,12 @@ export function BankingTab() {
       </div>
 
       {showBankForm && (
-        <form onSubmit={handleBankSurplus} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 space-y-4">
-          <h3 className="text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Bank Surplus Units</h3>
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleBankSurplus} className="card-elevated p-8 space-y-6 animate-slide-down">
+          <div>
+            <h3 className="text-2xl font-bold text-gradient-accent mb-2">Bank Surplus Units</h3>
+            <p className="text-slate-600 text-sm">Store surplus compliance units for future use</p>
+          </div>
+          <div className="grid grid-cols-2 gap-6">
             <Input
               label="Ship ID"
               type="text"
@@ -180,16 +186,24 @@ export function BankingTab() {
               required
             />
           </div>
-          <Button type="submit" disabled={bankSurplus.isPending}>
-            {bankSurplus.isPending ? 'Banking...' : 'Bank Surplus'}
-          </Button>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" disabled={bankSurplus.isPending}>
+              {bankSurplus.isPending ? 'Banking...' : 'Bank Surplus'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => setShowBankForm(false)}>
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 
       {showApplyForm && (
-        <form onSubmit={handleApplyBanked} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 space-y-4">
-          <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Apply Banked Units</h3>
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleApplyBanked} className="card-elevated p-8 space-y-6 animate-slide-down">
+          <div>
+            <h3 className="text-2xl font-bold text-gradient-primary mb-2">Apply Banked Units</h3>
+            <p className="text-slate-600 text-sm">Use stored compliance units to cover deficits</p>
+          </div>
+          <div className="grid grid-cols-2 gap-6">
             <Input
               label="Deficit"
               type="number"
@@ -208,18 +222,32 @@ export function BankingTab() {
               required
             />
           </div>
-          <div className="text-sm text-gray-600">
-            Available banked units: {entries.filter((e) => new Date(e.expiryDate) >= new Date()).length}
+          <div className="p-4 bg-primary-50/50 border border-primary-200 rounded-xl">
+            <p className="text-sm font-semibold text-primary-700">
+              Available banked units: <span className="text-primary-900 text-lg">{entries.filter((e) => new Date(e.expiryDate) >= new Date()).length}</span>
+            </p>
           </div>
-          <Button type="submit" disabled={applyBanked.isPending}>
-            {applyBanked.isPending ? 'Applying...' : 'Apply Banked Units'}
-          </Button>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" disabled={applyBanked.isPending}>
+              {applyBanked.isPending ? 'Applying...' : 'Apply Banked Units'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => setShowApplyForm(false)}>
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 
-      <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">Bank Entries</h3>
-        {isLoading && <div className="text-center py-8">Loading...</div>}
+      <div className="card-elevated p-8">
+        <div className="mb-6">
+          <h3 className="text-xl font-bold text-slate-800 mb-2">Bank Entries</h3>
+          <p className="text-slate-600 text-sm">View all stored compliance units and their expiry dates</p>
+        </div>
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-pulse text-slate-500 font-medium">Loading bank entries...</div>
+          </div>
+        )}
         {!isLoading && <Table columns={columns} data={entries} emptyText="No bank entries" />}
       </div>
     </div>

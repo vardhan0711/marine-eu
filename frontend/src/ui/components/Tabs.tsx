@@ -17,31 +17,31 @@ export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
 
   return (
     <div className="w-full">
-      <div className="border-b border-gray-200 bg-white rounded-t-lg shadow-sm">
-        <nav className="flex space-x-1 px-2" aria-label="Tabs">
+      <div className="glass-strong rounded-2xl p-2 mb-6">
+        <nav className="flex space-x-2" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                whitespace-nowrap border-b-2 px-6 py-4 text-sm font-semibold transition-all duration-300
-                relative transform hover:scale-105
+                relative whitespace-nowrap px-6 py-3 text-sm font-semibold rounded-xl
+                transition-all duration-300 transform
                 ${
                   activeTab === tab.id
-                    ? 'border-blue-600 text-blue-600 bg-gradient-to-b from-blue-50 to-transparent'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50'
+                    ? 'text-gradient-primary bg-white shadow-medium scale-105'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 hover:scale-[1.02]'
                 }
               `}
             >
               {tab.label}
               {activeTab === tab.id && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
+                <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"></span>
               )}
             </button>
           ))}
         </nav>
       </div>
-      <div className="mt-6">{activeTabContent}</div>
+      <div className="animate-fade-in">{activeTabContent}</div>
     </div>
   );
 }

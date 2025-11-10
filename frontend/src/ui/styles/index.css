@@ -1,19 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply m-0 min-h-screen;
+    @apply m-0 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Modern card component */
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft border border-white/50;
+    @apply transition-all duration-300 hover:shadow-medium hover:border-white/80;
+  }
+
+  .card-elevated {
+    @apply bg-white/90 backdrop-blur-md rounded-2xl shadow-medium border border-white/60;
+    @apply transition-all duration-300 hover:shadow-large hover:scale-[1.01];
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+    @apply shadow-soft;
+  }
+
+  .glass-strong {
+    @apply bg-white/80 backdrop-blur-2xl border border-white/30;
+    @apply shadow-medium;
+  }
+
+  /* Modern gradient backgrounds */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 via-primary-500 to-accent-600;
+  }
+
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent-500 via-purple-500 to-pink-500;
+  }
+
+  .gradient-subtle {
+    @apply bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50/30;
+  }
+
+  /* Text gradients */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent-500 to-pink-500 bg-clip-text text-transparent;
   }
 }
 
 @layer utilities {
-  /* Smooth scroll behavior */
-  html {
-    scroll-behavior: smooth;
-  }
-
   /* Custom gradient animations */
   @keyframes gradient-shift {
     0%, 100% {
@@ -29,11 +79,44 @@
     animation: gradient-shift 3s ease infinite;
   }
 
-  /* Glass morphism effect */
-  .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+  /* Shimmer effect */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%
+    );
+    background-size: 1000px 100%;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Modern scrollbar */
+  .scrollbar-modern::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-track {
+    @apply bg-slate-100 rounded-full;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full hover:bg-slate-400;
   }
 }
 

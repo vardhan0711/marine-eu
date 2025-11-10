@@ -16,16 +16,38 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg">
+    <div className="min-h-screen gradient-subtle">
+      {/* Modern Header */}
+      <header className="glass-strong border-b border-white/30 shadow-medium sticky top-0 z-50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-white drop-shadow-md">FuelEU Maritime</h1>
-          <p className="text-blue-100 mt-1">Compliance Management System</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gradient-primary mb-1 tracking-tight">
+                FuelEU Maritime
+              </h1>
+              <p className="text-slate-600 font-medium text-sm">Compliance Management System</p>
+            </div>
+            <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 backdrop-blur-sm border border-white/30">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse-slow"></div>
+              <span className="text-sm font-semibold text-slate-700">System Online</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-16 py-6 border-t border-slate-200/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-slate-500 font-medium">
+            © 2024 FuelEU Maritime Compliance System
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

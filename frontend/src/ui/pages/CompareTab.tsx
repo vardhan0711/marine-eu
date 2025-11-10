@@ -150,12 +150,18 @@ export function CompareTab() {
   }));
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Compare & Analyze</h2>
+    <div className="space-y-6 animate-fade-in">
+      <div className="mb-6">
+        <h2 className="text-4xl font-bold text-gradient-primary mb-2">Compare & Analyze</h2>
+        <p className="text-slate-600 text-sm font-medium">Compute compliance balance and analyze GHG intensity data</p>
+      </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">Compute Compliance</h3>
-        <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="card-elevated p-8">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-slate-800 mb-2">Compute Compliance</h3>
+          <p className="text-slate-600 text-sm">Calculate compliance balance and compare against targets</p>
+        </div>
+        <div className="grid grid-cols-3 gap-6 mb-6">
           <Input
             label="GHG Intensity (gCO2eq/MJ)"
             type="number"
@@ -185,20 +191,21 @@ export function CompareTab() {
 
       {/* Results Display */}
       {(cbResult || comparisonResult || error) && (
-        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-            Result
-          </h3>
+        <div className="card-elevated p-8 animate-slide-down">
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold text-gradient-accent mb-2">Computation Result</h3>
+            <p className="text-slate-600 text-sm">Review the calculated compliance metrics</p>
+          </div>
           
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 font-medium">{error}</p>
+            <div className="mb-6 p-5 bg-red-50/80 border border-red-300 rounded-xl animate-slide-down">
+              <p className="text-red-700 font-semibold">{error}</p>
             </div>
           )}
 
           {cbResult && (
-            <div className="space-y-3">
-              <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+            <div className="space-y-4">
+              <div className="p-6 bg-gradient-to-r from-primary-50/80 to-accent-50/50 rounded-xl border border-primary-200 shadow-soft">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-semibold text-gray-700">Compliance Balance:</span>
                   <span className="text-2xl font-bold text-blue-700">{cbResult.cb.toFixed(2)}</span>
@@ -234,8 +241,8 @@ export function CompareTab() {
           )}
 
           {comparisonResult && (
-            <div className="space-y-3">
-              <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
+            <div className="space-y-4">
+              <div className="p-6 bg-gradient-to-r from-accent-50/80 to-pink-50/50 rounded-xl border border-accent-200 shadow-soft">
                 <div className="grid grid-cols-2 gap-4 mb-3">
                   <div>
                     <span className="text-sm font-semibold text-gray-700">Actual GHG Intensity:</span>
@@ -270,8 +277,12 @@ export function CompareTab() {
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-        <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
+      <div className="card-elevated p-8">
+        <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Compliance Data</h3>
+            <p className="text-slate-600 text-sm">View and manage compliance records</p>
+          </div>
           <Select
             label="Filter by Status"
             value={filterStatus}
@@ -305,11 +316,12 @@ export function CompareTab() {
         </div>
 
         {showAddForm && (
-          <form onSubmit={handleAddCompliance} className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 space-y-4">
-            <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-              Add New Compliance Record
-            </h3>
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleAddCompliance} className="mb-6 p-8 bg-gradient-to-r from-primary-50/50 to-accent-50/30 rounded-xl border border-primary-200/50 space-y-6 animate-slide-down">
+            <div>
+              <h3 className="text-2xl font-bold text-gradient-primary mb-2">Add New Compliance Record</h3>
+              <p className="text-slate-600 text-sm">Enter voyage compliance data for analysis</p>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
               <Input
                 label="Ship ID"
                 type="text"
@@ -421,12 +433,16 @@ export function CompareTab() {
           </form>
         )}
 
-        {isLoading && <div className="text-center py-8 text-gray-500">Loading...</div>}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-pulse text-slate-500 font-medium">Loading compliance data...</div>
+          </div>
+        )}
 
         {!isLoading && compliance.length > 0 && (
-          <div className="space-y-8">
-            <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg hover:from-blue-100 hover:to-indigo-100 transition-all duration-300">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">GHG Intensity Comparison</h3>
+          <div className="space-y-8 mt-8">
+            <div className="p-6 bg-gradient-to-r from-primary-50/50 to-accent-50/30 rounded-xl border border-primary-200/50 shadow-soft hover:shadow-medium transition-all duration-300">
+              <h3 className="text-xl font-bold mb-6 text-slate-800">GHG Intensity Comparison</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={intensityData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -440,8 +456,8 @@ export function CompareTab() {
               </ResponsiveContainer>
             </div>
 
-            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg hover:from-purple-100 hover:to-pink-100 transition-all duration-300">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Compliance Balance by Voyage</h3>
+            <div className="p-6 bg-gradient-to-r from-accent-50/50 to-pink-50/30 rounded-xl border border-accent-200/50 shadow-soft hover:shadow-medium transition-all duration-300">
+              <h3 className="text-xl font-bold mb-6 text-slate-800">Compliance Balance by Voyage</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={cbData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -454,8 +470,8 @@ export function CompareTab() {
               </ResponsiveContainer>
             </div>
 
-            <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg hover:from-green-100 hover:to-emerald-100 transition-all duration-300">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Status Distribution</h3>
+            <div className="p-6 bg-gradient-to-r from-green-50/50 to-emerald-50/30 rounded-xl border border-green-200/50 shadow-soft hover:shadow-medium transition-all duration-300">
+              <h3 className="text-xl font-bold mb-6 text-slate-800">Status Distribution</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={statusChartData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -471,11 +487,16 @@ export function CompareTab() {
         )}
 
         {!isLoading && compliance.length === 0 && !showAddForm && (
-          <div className="text-center py-8">
-            <p className="text-gray-500 mb-4">No compliance data available</p>
+          <div className="text-center py-16">
+            <div className="mb-6">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary-100 to-accent-100 flex items-center justify-center">
+                <span className="text-4xl">📊</span>
+              </div>
+              <p className="text-slate-600 font-medium mb-2 text-lg">No compliance data available</p>
+              <p className="text-slate-500 text-sm mb-6">Get started by adding your first compliance record</p>
+            </div>
             <Button
               onClick={() => setShowAddForm(true)}
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
             >
               + Add Your First Compliance Record
             </Button>

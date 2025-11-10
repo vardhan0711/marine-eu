@@ -83,18 +83,24 @@ export function RoutesTab() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Routes</h2>
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-4xl font-bold text-gradient-primary mb-2">Routes</h2>
+          <p className="text-slate-600 text-sm font-medium">Manage shipping routes and distances</p>
+        </div>
         <Button onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : 'Add Route'}
+          {showForm ? 'Cancel' : '+ Add Route'}
         </Button>
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 space-y-4">
-          <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Add New Route</h3>
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="card-elevated p-8 space-y-6 animate-slide-down">
+          <div>
+            <h3 className="text-2xl font-bold text-gradient-primary mb-2">Add New Route</h3>
+            <p className="text-slate-600 text-sm">Enter route details to create a new shipping route</p>
+          </div>
+          <div className="grid grid-cols-2 gap-6">
             <Input
               label="Origin Port"
               value={formData.originPort}
@@ -128,32 +134,46 @@ export function RoutesTab() {
               ]}
             />
           </div>
-          <Button type="submit" disabled={createRoute.isPending}>
-            {createRoute.isPending ? 'Creating...' : 'Create Route'}
-          </Button>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" disabled={createRoute.isPending}>
+              {createRoute.isPending ? 'Creating...' : 'Create Route'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => setShowForm(false)}>
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 
-      <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-        <div className="mb-4 flex gap-4">
-          <Input
-            placeholder="Filter by origin port"
-            value={filters.originPort}
-            onChange={(e) => setFilters({ ...filters, originPort: e.target.value })}
-            className="max-w-xs"
-          />
-          <Input
-            placeholder="Filter by destination port"
-            value={filters.destinationPort}
-            onChange={(e) => setFilters({ ...filters, destinationPort: e.target.value })}
-            className="max-w-xs"
-          />
+      <div className="card-elevated p-8">
+        <div className="mb-6">
+          <h3 className="text-xl font-bold text-slate-800 mb-4">Route Filters</h3>
+          <div className="flex gap-4">
+            <Input
+              placeholder="Filter by origin port"
+              value={filters.originPort}
+              onChange={(e) => setFilters({ ...filters, originPort: e.target.value })}
+              className="max-w-xs"
+            />
+            <Input
+              placeholder="Filter by destination port"
+              value={filters.destinationPort}
+              onChange={(e) => setFilters({ ...filters, destinationPort: e.target.value })}
+              className="max-w-xs"
+            />
+          </div>
         </div>
 
-        {isLoading && <div className="text-center py-8 text-gray-500">Loading...</div>}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-pulse text-slate-500 font-medium">Loading routes...</div>
+          </div>
+        )}
         {error && (
-          <div className="text-red-600 py-4 bg-red-50 border border-red-200 rounded-lg px-4">
-            Error loading routes: {error instanceof Error ? error.message : String(error)}
+          <div className="p-4 bg-red-50/80 border border-red-200 rounded-xl mb-4 animate-slide-down">
+            <p className="text-red-700 font-semibold">
+              Error loading routes: {error instanceof Error ? error.message : String(error)}
+            </p>
           </div>
         )}
         {!isLoading && !error && (
