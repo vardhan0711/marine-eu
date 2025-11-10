@@ -25,11 +25,11 @@ export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
               onClick={() => onTabChange(tab.id)}
               className={`
                 relative whitespace-nowrap px-6 py-3 text-sm font-semibold rounded-xl
-                transition-all duration-300 transform
+                transition-all duration-300 transform button-hover-animation
                 ${
                   activeTab === tab.id
                     ? 'text-gradient-primary bg-white shadow-medium scale-105'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 hover:scale-[1.02]'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-soft'
                 }
               `}
             >

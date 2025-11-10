@@ -105,6 +105,68 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Button hover animations */
+  @keyframes button-pulse {
+    0%, 100% {
+      box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+    }
+    50% {
+      box-shadow: 0 4px 25px -5px rgba(14, 165, 233, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  @keyframes button-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.5), 0 0 40px rgba(168, 85, 247, 0.3);
+    }
+  }
+
+  @keyframes button-lift {
+    0% {
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      transform: translateY(-2px) scale(1.02);
+    }
+  }
+
+  @keyframes button-shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .button-hover-animation {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .button-hover-animation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  .button-hover-animation:hover::before {
+    left: 100%;
+  }
+
   /* Modern scrollbar */
   .scrollbar-modern::-webkit-scrollbar {
     width: 8px;

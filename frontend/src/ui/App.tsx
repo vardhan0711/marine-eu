@@ -1,12 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Tabs } from './components/Tabs';
 import { RoutesTab } from './pages/RoutesTab';
 import { CompareTab } from './pages/CompareTab';
 import { BankingTab } from './pages/BankingTab';
 import { PoolingTab } from './pages/PoolingTab';
+import { NotFound } from './pages/NotFound';
 
-function App() {
+function MainApp() {
   const [activeTab, setActiveTab] = useState('routes');
+  const location = useLocation();
+
+  // Update active tab based on hash
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && ['routes', 'compare', 'banking', 'pooling'].includes(hash)) {
+      setActiveTab(hash);
+    }
+  }, [location.hash]);
 
   const tabs = [
     { id: 'routes', label: 'Routes', content: <RoutesTab /> },
@@ -49,6 +60,15 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainApp />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
